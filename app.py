@@ -12,6 +12,7 @@ init_session_state()
 pages = [
     st.Page("views/dashboard.py", title="Dashboard", icon="🏠", default=True),
     st.Page("views/charts.py", title="Charts", icon="📈"),
+    st.Page("views/data_editor.py", title="Data editor", icon="✏️"),
 ]
 
 st.navigation(pages).run()
