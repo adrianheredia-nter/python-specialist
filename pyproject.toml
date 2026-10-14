@@ -1,0 +1,9 @@
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+
+[tool.pylint.main]
+ignore = [".venv", "venv"]
+
+[tool.pylint.format]
+max-line-length = 100
