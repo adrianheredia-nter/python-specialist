@@ -3,10 +3,11 @@
 import pandas as pd
 import streamlit as st
 
+from student_analytics.charts import score_distribution_box
 from student_analytics.config import MATH, READING, WRITING
 from student_analytics.data import get_data
 from student_analytics.filters import filtered_data
-from student_analytics.metrics import compute_kpis
+from student_analytics.metrics import compute_kpis, describe_scores
 
 
 def _delta(value: float, reference: float, suffix: str = "") -> str | None:
@@ -36,6 +37,17 @@ def show_kpis(df: pd.DataFrame, full_df: pd.DataFrame) -> None:
     )
 
 
+def show_statistics(df: pd.DataFrame) -> None:
+    """Descriptive statistics, hidden in an expander by default."""
+    with st.expander("Statistical analysis", expanded=False):
+        st.dataframe(describe_scores(df).round(2), width="stretch")
+        st.plotly_chart(score_distribution_box(df), width="stretch")
+        st.caption(
+            "The box shows the middle 50% of the scores. "
+            "The line inside is the median and the dots are outliers."
+        )
+
+
 def main() -> None:
     """Render the dashboard page."""
     st.title("Students Performance Dashboard")
@@ -50,6 +62,8 @@ def main() -> None:
 
     st.subheader(f"Filtered data ({len(df)} of {len(full_df)} students)")
     st.dataframe(df, width="stretch")
+
+    show_statistics(df)
 
 
 main()
