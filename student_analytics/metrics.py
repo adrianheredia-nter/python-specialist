@@ -48,3 +48,19 @@ def scores_long(df: pd.DataFrame) -> pd.DataFrame:
         .melt(var_name="Subject", value_name="Score")
         .dropna()
     )
+
+
+def mean_by(df: pd.DataFrame, group: str, score: str) -> pd.DataFrame:
+    """Average of one score for each value of a category."""
+    return df.groupby(group, as_index=False)[score].mean()
+
+
+def passed_by_subject(df: pd.DataFrame) -> pd.DataFrame:
+    """Passed and failed students for each subject, in long format."""
+    rows = []
+    for column in SCORE_COLUMNS:
+        passed = int((df[column] >= PASS_MARK).sum())
+        subject = SUBJECT_LABELS[column]
+        rows.append({"Subject": subject, "Result": "Passed", "Students": passed})
+        rows.append({"Subject": subject, "Result": "Failed", "Students": len(df) - passed})
+    return pd.DataFrame(rows)
