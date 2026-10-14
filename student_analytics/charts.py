@@ -59,7 +59,9 @@ def reading_by_education_chart(df):
         alt.Chart(data)
         .mark_bar(cornerRadiusEnd=4)
         .encode(
-            x=alt.X("avg_reading:Q", title="Average reading score", scale=alt.Scale(domain=[0, 100])),
+            x=alt.X(
+                "avg_reading:Q", title="Average reading score", scale=alt.Scale(domain=[0, 100])
+            ),
             y=alt.Y(f"{PARENT_EDUCATION}:N", title=label, sort=EDUCATION_ORDER),
             color=alt.condition(hover, alt.value("#F58518"), alt.value("#4C78A8")),
             tooltip=[

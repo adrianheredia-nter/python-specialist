@@ -14,11 +14,10 @@ def main() -> None:
     full_df = get_data()
     df = filtered_data(full_df)
 
-    if df.empty:
-        st.warning("No students match the selected filters.")
-        return
-
     st.caption(f"Showing {len(df)} of {len(full_df)} students.")
+    if df.empty:
+        st.warning("Nothing to plot. Try removing some filters.")
+        return
 
     left, right = st.columns(2)
     with left:
